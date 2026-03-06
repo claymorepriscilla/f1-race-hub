@@ -200,15 +200,14 @@ const Podium = ({ drivers }: { drivers: PodiumDriverProps[] }) => {
         ))}
       </div>
 
-      {/* P1 on top center, P2 and P3 flanking below at same height */}
-      <div className="flex flex-col items-center gap-0 py-8 relative z-10">
-        {/* P1 - Top center */}
+      {/* P2, P1 in center, P3 - All in one horizontal line */}
+      <div className="flex items-end justify-center gap-6 md:gap-16 py-8 relative z-10">
+        {/* P2 */}
+        <DriverCard driver={drivers[1]} rank={2} />
+        {/* P1 - Center */}
         <DriverCard driver={drivers[0]} rank={1} />
-        {/* P2 and P3 - Exactly 50px below P1, same level */}
-        <div className="flex items-start justify-center gap-6 md:gap-16" style={{ marginTop: '50px' }}>
-          <DriverCard driver={drivers[1]} rank={2} />
-          <DriverCard driver={drivers[2]} rank={3} />
-        </div>
+        {/* P3 */}
+        <DriverCard driver={drivers[2]} rank={3} />
       </div>
     </div>
   );
