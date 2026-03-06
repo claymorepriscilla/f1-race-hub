@@ -7,6 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
 import { toast } from 'sonner';
 import { Shield, ArrowLeft, CheckCircle, XCircle } from 'lucide-react';
+import StandingsPagination from '@/components/StandingsPagination';
 
 interface RequestRow {
   id: string;
@@ -29,7 +30,7 @@ const AdminPanel = () => {
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [declineComment, setDeclineComment] = useState<Record<string, string>>({});
   const [page, setPage] = useState(0);
-  const PAGE_SIZE = 15;
+  const PAGE_SIZE = 5;
 
   useEffect(() => {
     if (!authLoading && (!profile || !profile.is_admin)) {
@@ -220,13 +221,12 @@ const AdminPanel = () => {
             ))}
           </div>
 
-          {totalPages > 1 && (
-            <div className="flex justify-center gap-2 mt-4">
-              <Button size="sm" variant="outline" disabled={page === 0} onClick={() => setPage(p => p - 1)} className="font-racing text-xs">PREV</Button>
-              <span className="flex items-center text-sm text-muted-foreground font-racing">LAP {page + 1}/{totalPages}</span>
-              <Button size="sm" variant="outline" disabled={page >= totalPages - 1} onClick={() => setPage(p => p + 1)} className="font-racing text-xs">NEXT</Button>
-            </div>
-          )}
+          <StandingsPagination
+            page={page}
+            totalItems={pendingRequests.length}
+            pageSize={PAGE_SIZE}
+            onPageChange={setPage}
+          />
         </div>
       </div>
     </div>

@@ -10,6 +10,8 @@ import SubmitKpiModal from '@/components/SubmitKpiModal';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Flag, Flame, Trophy, Gauge, LogOut, Shield, User } from 'lucide-react';
+import StandingsPagination from '@/components/StandingsPagination';
+import F1CarAnimation from '@/components/F1CarAnimation';
 
 interface Profile {
   id: string;
@@ -35,7 +37,7 @@ const Dashboard = () => {
   const [showKpiModal, setShowKpiModal] = useState(false);
   const [myRequests, setMyRequests] = useState<any[]>([]);
   const [page, setPage] = useState(0);
-  const PAGE_SIZE = 10;
+  const PAGE_SIZE = 5;
 
   useEffect(() => {
     if (!authLoading && !user) navigate('/login');
@@ -146,6 +148,7 @@ const Dashboard = () => {
               <h2 className="font-racing text-lg tracking-wider">THE PODIUM</h2>
             </div>
             <Podium drivers={top3} />
+            <F1CarAnimation />
           </motion.div>
         )}
 
@@ -236,19 +239,12 @@ const Dashboard = () => {
               </table>
             </div>
 
-            {totalPages > 1 && (
-              <div className="flex justify-center gap-2 mt-4">
-                <Button size="sm" variant="outline" disabled={page === 0} onClick={() => setPage(p => p - 1)} className="font-racing text-xs">
-                  PREV
-                </Button>
-                <span className="flex items-center text-sm text-muted-foreground font-racing">
-                  LAP {page + 1}/{totalPages}
-                </span>
-                <Button size="sm" variant="outline" disabled={page >= totalPages - 1} onClick={() => setPage(p => p + 1)} className="font-racing text-xs">
-                  NEXT
-                </Button>
-              </div>
-            )}
+            <StandingsPagination
+              page={page}
+              totalItems={filtered.length}
+              pageSize={PAGE_SIZE}
+              onPageChange={setPage}
+            />
           </div>
 
           {/* Pit Stop Panel */}
