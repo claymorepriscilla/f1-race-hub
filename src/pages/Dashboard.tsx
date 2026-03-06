@@ -195,7 +195,7 @@ const Dashboard = () => {
                     <th className="text-left py-3 px-2">TEAM</th>
                     <th className="text-right py-3 px-2">PTS</th>
                     <th className="text-center py-3 px-2">TIER</th>
-                    <th className="text-center py-3 px-2">🔥</th>
+                    <th className="text-center py-3 px-2">LAST UPDATE</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -230,8 +230,11 @@ const Dashboard = () => {
                       <td className="py-3 px-2 text-center">
                         <TierBadge tier={driver.rank_tier} />
                       </td>
-                      <td className="py-3 px-2 text-center text-lg">
-                        {isHotStreak(driver.last_point_earned_at) && <Flame className="w-5 h-5 text-primary inline" />}
+                      <td className="py-3 px-2 text-center text-xs text-muted-foreground font-racing">
+                        {driver.last_point_earned_at 
+                          ? new Date(driver.last_point_earned_at).toLocaleDateString('th-TH', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })
+                          : '-'
+                        }
                       </td>
                     </motion.tr>
                   ))}
@@ -276,14 +279,14 @@ const Dashboard = () => {
                   <p className="text-xs text-muted-foreground text-center py-4">No race reports submitted yet</p>
                 )}
                 {myRequests.map((req) => (
-                  <div key={req.id} className="flex items-center justify-between py-2 border-b border-border/50 last:border-0">
-                    <div>
-                      <p className="text-sm truncate max-w-[150px]">{req.description}</p>
-                      <p className="text-xs text-muted-foreground">{req.kpi_type_id}</p>
+                  <div key={req.id} className="flex flex-col gap-1 py-2 border-b border-border/50 last:border-0">
+                    <div className="flex items-start justify-between gap-2">
+                      <p className="text-sm flex-1">{req.description}</p>
+                      <span className={`font-racing text-xs tracking-wider uppercase whitespace-nowrap ${statusColor(req.status)}`}>
+                        {req.status}
+                      </span>
                     </div>
-                    <span className={`font-racing text-xs tracking-wider uppercase ${statusColor(req.status)}`}>
-                      {req.status}
-                    </span>
+                    <p className="text-xs text-muted-foreground">{req.kpi_type_id}</p>
                   </div>
                 ))}
               </div>

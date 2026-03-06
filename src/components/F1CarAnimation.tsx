@@ -22,15 +22,15 @@ const SmokeParticle = ({ delay }: { delay: number }) => (
 
 const F1CarAnimation = () => {
   return (
-    <div className="relative w-full h-16 overflow-visible pointer-events-none mt-2">
+    <div className="relative w-full h-16 overflow-hidden pointer-events-none mt-2">
       {/* Track line */}
       <div className="absolute bottom-2 left-0 right-0 h-px bg-border" />
 
       <motion.div
-        className="absolute bottom-2"
+        className="absolute bottom-2 left-0"
         initial={{ x: '-150px' }}
-        animate={{ x: 'calc(100% - 120px)' }}
-        transition={{ duration: 8, ease: [0.4, 0, 0.2, 1], delay: 1 }}
+        animate={{ x: '100vw' }}
+        transition={{ duration: 6, ease: 'linear', repeat: Infinity }}
       >
         {/* Smoke particles */}
         <div className="absolute -left-4 bottom-0">
